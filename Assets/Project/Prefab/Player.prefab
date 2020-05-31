@@ -243,6 +243,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80a8d91cbcfa0ff4cb5db4104d0db638, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  componentsToDisable:
+  - {fileID: 5441427250765180968}
+  - {fileID: 5441427250765180967}
+  - {fileID: 5441427250587462883}
+  - {fileID: 5441427250587462884}
 --- !u!1 &5441427251027359127
 GameObject:
   m_ObjectHideFlags: 0
