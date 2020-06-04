@@ -13,6 +13,8 @@ public class PlayerMotor : MonoBehaviour
     private Vector3 velocity = Vector3.zero;
     private Vector3 rotation = Vector3.zero;
     private Vector3 cameraRotation = Vector3.zero;
+    private Vector3 jumpForce = Vector3.zero;
+    //private Vector3 gravity = Vector3.zero;
 
     private Rigidbody rb;
 
@@ -36,27 +38,44 @@ public class PlayerMotor : MonoBehaviour
         this.cameraRotation = cameraRotation;
     }
 
+    public void SetJumpForce(Vector3 jumpForce)
+    {
+        this.jumpForce = jumpForce;
+    }
+
+    //public void SetGravity(Vector3 gravity)
+    //{
+    //    this.gravity = gravity;
+    //}
+
     void FixedUpdate()
     {
+        //rb.MovePosition(rb.position + gravity * Time.fixedDeltaTime);
+
         Move();
         Rotate();
     }
 
     private void Move()
     {
-        if (this.velocity != Vector3.zero)
+        if (velocity != Vector3.zero)
         {
-            rb.MovePosition(rb.position + this.velocity * Time.fixedDeltaTime);
+            rb.MovePosition(rb.position + velocity * Time.fixedDeltaTime);
+        }
+
+        if (jumpForce != Vector3.zero)
+        {
+            rb.AddForce(jumpForce * Time.fixedDeltaTime);
         }
     }
 
     private void Rotate()
     {
-        rb.MoveRotation(rb.rotation * Quaternion.Euler(this.rotation));
+        rb.MoveRotation(rb.rotation * Quaternion.Euler(rotation));
 
         if (cam != null)
         {
-            cam.transform.Rotate(-this.cameraRotation);
+            cam.transform.Rotate(-cameraRotation);
         }
     }
 }

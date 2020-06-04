@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using JetBrains.Annotations;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,6 +12,17 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float mouseSensitivity = 10f;
 
+    [SerializeField]
+    private float jumpForce = 1000f;
+
+    //[SerializeField]
+    //private float gravity = -9.81f;
+
+    public Transform groundCheck;
+    public float groundDistance = 0.4f;
+    public LayerMask groundMask;
+    bool isGrounded;
+
     private PlayerMotor motor;
 
     void Start()
@@ -22,6 +34,9 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        // Check Ground
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+
         // Calculate Movement
         float xPosition = Input.GetAxisRaw("Horizontal");
         float zPosition = Input.GetAxisRaw("Vertical");
@@ -29,7 +44,7 @@ public class PlayerController : MonoBehaviour
         Vector3 moveHorizontal = transform.right * xPosition;
         Vector3 moveVertical = transform.forward * zPosition;
 
-        // Movement Vector
+        // Calculate Movement
         if (Input.GetKeyDown(KeyCode.LeftShift) && (xPosition != 0f || zPosition != 0f))
         {
             speed = 2.5f;
@@ -62,5 +77,23 @@ public class PlayerController : MonoBehaviour
 
         // Apply Camera Rotation
         motor.SetCameraRotation(cameraRotation);
+
+        // Calculate Jump Force
+        Vector3 jump = Vector3.zero;
+
+        if (isGrounded && Input.GetButton("Jump"))
+        {
+            jump = Vector3.up * jumpForce;
+        }
+
+        // Apply Jump Force
+        motor.SetJumpForce(jump);
+
+        // Calculate Gravity
+        //Vector3 fallingVelocity = Vector3.zero;
+        //fallingVelocity.y += gravity * Time.deltaTime;
+
+        // Apply Gravity
+        //motor.SetGravity(fallingVelocity);
     }
 }
