@@ -32,14 +32,14 @@ public class PlayerController : MonoBehaviour
         // Movement Vector
         if (Input.GetKeyDown(KeyCode.LeftShift) && (xPosition != 0f || zPosition != 0f))
         {
-            speed = 1.5f;
+            speed = 2.5f;
         }
         else if (Input.GetKeyDown(KeyCode.LeftControl) && (xPosition != 0f || zPosition != 0f)) {
-            speed = 3.5f;
+            speed = 4.5f;
         }
         else if (Input.GetKeyUp(KeyCode.LeftShift) || Input.GetKeyUp(KeyCode.LeftControl))
         {
-            speed = 2.5f;
+            speed = 3.5f;
         }
 
         Vector3 velocity = (moveHorizontal + moveVertical).normalized * speed;
