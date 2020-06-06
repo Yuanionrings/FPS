@@ -43,15 +43,8 @@ public class PlayerMotor : MonoBehaviour
         this.jumpForce = jumpForce;
     }
 
-    //public void SetGravity(Vector3 gravity)
-    //{
-    //    this.gravity = gravity;
-    //}
-
     void FixedUpdate()
     {
-        //rb.MovePosition(rb.position + gravity * Time.fixedDeltaTime);
-
         Move();
         Rotate();
     }
@@ -65,7 +58,7 @@ public class PlayerMotor : MonoBehaviour
 
         if (jumpForce != Vector3.zero)
         {
-            rb.AddForce(jumpForce * Time.fixedDeltaTime);
+            rb.AddForce(jumpForce, ForceMode.Impulse);
         }
     }
 
