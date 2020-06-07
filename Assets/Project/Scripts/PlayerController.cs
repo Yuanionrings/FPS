@@ -47,7 +47,7 @@ public class PlayerController : MonoBehaviour
 
         // Calculate Camera Y-Rotation
         float mouseY = Input.GetAxisRaw("Mouse Y");
-
+         
         cameraRotation = new Vector3(mouseY, 0f, 0f) * mouseSensitivity;
 
         // Calculate Movement
