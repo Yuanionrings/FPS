@@ -1,6 +1,8 @@
 ﻿using JetBrains.Annotations;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+//using System.Numerics;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -11,7 +13,11 @@ public class PlayerController : MonoBehaviour
 
     private Vector3 velocity = Vector3.zero;
     private Vector3 rotation = Vector3.zero;
-    private Vector3 cameraRotation = Vector3.zero;
+    private float cameraRotationY = 0f;
+    private float currentCameraRotationY = 0f;
+
+    [SerializeField]
+    private float cameraRotationLimit = 85f;
 
     private Rigidbody rb;
 
@@ -48,7 +54,7 @@ public class PlayerController : MonoBehaviour
         // Calculate Camera Y-Rotation
         float mouseY = Input.GetAxisRaw("Mouse Y");
          
-        cameraRotation = new Vector3(mouseY, 0f, 0f) * mouseSensitivity;
+        cameraRotationY = mouseY * mouseSensitivity;
 
         // Calculate Movement
         float xPosition = Input.GetAxisRaw("Horizontal");
@@ -104,7 +110,12 @@ public class PlayerController : MonoBehaviour
 
         if (cam != null)
         {
-            cam.transform.Rotate(-cameraRotation);
+            // Rotation Calculation
+            currentCameraRotationY -= cameraRotationY;
+            currentCameraRotationY = Mathf.Clamp(currentCameraRotationY, -cameraRotationLimit, cameraRotationLimit);
+            
+            // Applying Rotation
+            cam.transform.localEulerAngles = new Vector3(currentCameraRotationY, 0f, 0f);
         }
     }
 
